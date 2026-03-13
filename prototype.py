@@ -32,7 +32,7 @@ def parse_nox_report(file_path):
         odi_match = re.search(r'"?Oxygen Desaturation Index \(ODI\):\s+(\d+\.?\d*)\s*/h', content)
         avg_spo2_match = re.search(r'"?Average SpO2:\s+(\d+\.?\d*)\s*%', content)
         min_spo2_match = re.search(r'"?Minimum SpO2:\s+(\d+\.?\d*)\s*%', content)
-        sleep_time_match = re.search(r'"?Total Sleep Time \(TST\):\s+(\d+)h\s+(\d+)m', content)
+        sleep_time_match = re.search(r'"?(?:Est )?Total Sleep Time \(TST\):\s+(\d+)h\s+(\d+)m', content)
         supine_match = re.search(r'"?Supine \(in TST\):.*?(\d+\.?\d*)\s*%', content)
         apnea_index_match = re.search(r'^"?Apneas:\s+(\d+\.?\d*)\s*/h', content, re.MULTILINE)  # Apneas per hour
         apnea_count_match = re.search(r'"?Apneas:.*?(\d+)\s*$', content, re.MULTILINE)
@@ -74,9 +74,9 @@ def parse_nox_report(file_path):
             'arousal_index': 0
         }
 
-# Load Nox report data for Night 1 baseline
+# Load Nox report data for Night 1 baseline (Nevan patient data)
 try:
-    nox_baseline = parse_nox_report("N008N1SASReport.csv")
+    nox_baseline = parse_nox_report("Nevan121425N2SASReport.csv")
 except Exception as e:
     print(f"Error parsing Night 1: {e}")
     nox_baseline = {
